@@ -262,7 +262,7 @@ function showEnding() {
     const end = document.getElementById("love-ending");
     end.classList.remove("hidden");
 
-    for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 14; i++) {
         const heart = document.createElement("div");
         heart.innerText = "❤️";
         heart.style.position = "fixed";
