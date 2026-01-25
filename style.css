@@ -405,3 +405,140 @@ button {
 .snoopy-img {
     display: block;
 }
+/* =========================
+   OPTIMIZACIÓN GLOBAL
+========================= */
+
+/* iOS viewport fix */
+html, body {
+    height: 100%;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Mejor cálculo de altura móvil */
+.screen {
+    min-height: 100dvh;
+}
+
+/* Evita zoom raro en inputs/buttons iOS */
+button, input, textarea {
+    font-size: 16px;
+}
+
+/* Scroll fluido */
+#main-app {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Mejora rendimiento animaciones */
+.glass-card,
+.game-heart,
+.memory-envelope,
+.btn-heart,
+.floating-snoopy {
+    will-change: transform, opacity;
+}
+
+/* Reduce blur pesado en móviles */
+@media (max-width: 600px) {
+    .glass-card {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+}
+
+/* Ajustes reales para móvil */
+@media (max-width: 480px) {
+
+    body {
+        animation-duration: 25s;
+    }
+
+    .content-wrapper {
+        padding: 40px 0;
+        gap: 30px;
+    }
+
+    .glass-card {
+        width: 92%;
+        padding: 1.4rem;
+        border-radius: 22px;
+    }
+
+    .letter-card {
+        font-size: 1.25rem;
+        min-height: 200px;
+    }
+
+    #game-canvas,
+    #memory-canvas {
+        height: 190px;
+    }
+
+    .btn-main {
+        padding: 13px 26px;
+        font-size: .9rem;
+    }
+
+    .btn-heart {
+        font-size: 2.6rem;
+    }
+
+    #quote-text {
+        font-size: 1.1rem;
+    }
+
+    .floating-snoopy {
+        width: 70px;
+        bottom: 10px;
+        left: 10px;
+    }
+
+    .top-nav {
+        top: 12px;
+        right: 12px;
+    }
+
+    #music-toggle {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Ajustes grandes para PC */
+@media (min-width: 900px) {
+    .glass-card {
+        max-width: 600px;
+    }
+
+    .letter-card {
+        font-size: 1.75rem;
+    }
+
+    #game-canvas,
+    #memory-canvas {
+        height: 260px;
+    }
+
+    .btn-heart {
+        font-size: 3.3rem;
+    }
+}
+
+/* Evita saltos raros en Safari */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Mejora tapping */
+.btn-main,
+.btn-heart,
+#music-toggle {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
