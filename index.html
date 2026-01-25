@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snoopy Love Experience</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="particles" id="particles"></div>
+
+    <section id="welcome-screen" class="screen active">
+        <div class="glass-card">
+            <div class="snoopy-container">
+                <img src="https://i.pinimg.com/originals/b2/c8/5b/b2c85bda67c05e092c5c0d53aeda26f7.gif" alt="Snoopy Love" class="snoopy-img">
+            </div>
+            <h1>Hola, mi amor...</h1>
+            <p>He preparado algo especial para ti.</p>
+            <button class="btn-main" onclick="startExperience()">Abrir mi corazón</button>
+        </div>
+    </section>
+
+    <main id="main-app" class="screen hidden">
+        
+        <nav class="top-nav">
+            <button id="music-toggle" class="btn-icon">🎵</button>
+        </nav>
+
+        <div class="content-wrapper">
+            
+            <section class="letter-section">
+                <div class="glass-card letter-card">
+                    <div id="typewriter-text" class="typewriter"></div>
+                </div>
+            </section>
+
+            <section class="quotes-section">
+                <div class="quote-box" id="quote-container">
+                    <p id="quote-text">Toca el corazón y descubre cuánto te amo… 💕</p>
+                    <button class="btn-heart" onclick="showNewQuote()">❤️</button>
+                </div>
+            </section>
+
+            <section class="game-section">
+                <div class="glass-card game-card">
+                    <h3>¡Atrapa 10 corazones para una sorpresa!</h3>
+                    <div id="game-canvas">
+                        <div id="score">Corazones: 0</div>
+                    </div>
+                    <button id="start-game-btn" class="btn-main btn-small" onclick="initLoveGame(event)">
+                        Empezar Juego
+                    </button>
+                    <p id="secret-message" class="hidden-msg"></p>
+                </div>
+            </section>
+
+            <section class="memory-game-section">
+                <div class="glass-card game-card">
+                    <h3>💌 Encuentra los recuerdos</h3>
+                    <p>Toca 5 sobres para descubrir mensajes secretos.</p>
+
+                    <div id="memory-canvas"></div>
+
+                    <div id="memory-progress">Recuerdos: 0 / 5</div>
+
+                    <button class="btn-main btn-small" onclick="startMemoryGame()">
+                        Comenzar
+                    </button>
+
+                    <p id="memory-final" class="hidden-msg"></p>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="floating-snoopy">
+            <img src="https://i.pinimg.com/originals/10/f4/9b/10f49b851870dcbddfb368d0d4ba7ede.gif" alt="Snoopy Relax">
+        </div>
+
+    </main>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+<div id="love-ending" class="love-ending hidden">
+    <div class="love-ending-card">
+        <img src="https://i.pinimg.com/originals/b2/c8/5b/b2c85bda67c05e092c5c0d53aeda26f7.gif" alt="Snoopy Love">
+        <h2>Para ti, con todo mi corazón 💖</h2>
+        <p id="ending-text">
+            Gracias por llegar a mi vida.  
+            Contigo todo se siente más bonito, más tranquilo y más real.  
+            Prometo cuidarte, elegirte y amarte todos los días.  
+        </p>
+        <button class="btn-main" onclick="closeEnding()">Cerrar 💕</button>
+    </div>
+</div>
+
+</body>
+</html>
