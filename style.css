@@ -383,3 +383,25 @@ body::after {
 button {
     touch-action: manipulation;
 }
+.snoopy-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.snoopy-img {
+    width: 160px;
+    max-width: 70vw;
+    height: auto;
+    object-fit: contain;
+}
+@media (max-width: 480px) {
+    .snoopy-img {
+        width: 130px;
+    }
+}
+.snoopy-img {
+    display: block;
+}
