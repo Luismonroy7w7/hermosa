@@ -1,48 +1,99 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Love Games Deluxe</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --pink: #ff85a2; --purple: #a29bfe; }
-        body { 
-            margin: 0; font-family: 'Quicksand', sans-serif; 
-            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-            overflow: hidden; touch-action: none; /* Evita scroll en iPhone */
-            display: flex; flex-direction: column; align-items: center;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            margin: 15px; padding: 15px; border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center; width: 90%; max-width: 350px;
-            border: 2px solid white;
-        }
-        canvas { 
-            background: #ffffffaa; border-radius: 20px; 
-            display: block; margin: 0 auto; touch-action: none;
-        }
-        .controller { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; justify-items: center; }
-        .btn {
-            width: 55px; height: 55px; border-radius: 18px; border: none;
-            background: white; font-size: 22px; color: #555;
-            box-shadow: 0 5px 0 #ddd; transition: 0.1s;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #ddd; background: var(--pink); }
-        .secret-msg { 
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 20px; border-radius: 20px; z-index: 100;
-            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 50px rgba(0,0,0,0.2); display: none;
-        }
-        @keyframes pop { from { scale: 0; } to { scale: 1; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Love Games Deluxe</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+:root { --pink:#ff85a2; --purple:#a29bfe; }
+
+body { 
+  margin:0;
+  font-family:'Quicksand',sans-serif;
+  background:linear-gradient(-45deg,#ffd1dc,#cdb4ff,#bde0fe,#ffc8dd);
+  background-size:400% 400%;
+  animation:bgMove 18s ease infinite;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+.card{
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(15px);
+  margin:15px;
+  padding:15px;
+  border-radius:30px;
+  width:90%;
+  max-width:350px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+canvas{
+  background:#ffffffaa;
+  border-radius:20px;
+  display:block;
+  margin:auto;
+}
+
+.controller{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:10px;
+  justify-items:center;
+}
+
+.btn{
+  width:55px;
+  height:55px;
+  border-radius:18px;
+  border:none;
+  background:white;
+  font-size:22px;
+  box-shadow:0 5px 0 #ddd;
+}
+
+.btn:active{
+  transform:translateY(4px);
+  box-shadow:0 1px 0 #ddd;
+  background:var(--pink);
+}
+
+.secret-msg{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 0 40px rgba(0,0,0,.3);
+  display:none;
+  z-index:99;
+}
+
+#restartBtn{
+  margin-top:12px;
+  padding:12px 24px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(135deg,#ff85a2,#a29bfe);
+  color:white;
+  font-size:16px;
+}
+</style>
 </head>
+
 <body>
     <a href="index.html" style="
     position: fixed; 
@@ -57,106 +108,178 @@
     font-size: 14px;
     color: #ff85a2;
     font-weight: bold;
-">⬅ Volver</a>
-
+">❤️ Volver</a>
 <div class="card">
-    <h3 style="margin:5px; color:#666">🦄 Unicorn Magic</h3>
-    <canvas id="maze" width="300" height="180"></canvas>
-    <div class="controller">
-        <div></div><button class="btn" ontouchstart="moveU(0,-15)">⬆️</button><div></div>
-        <button class="btn" ontouchstart="moveU(-15,0)">⬅️</button>
-        <button class="btn" ontouchstart="moveU(0,15)">⬇️</button>
-        <button class="btn" ontouchstart="moveU(15,0)">➡️</button>
-    </div>
+<h3>🦄 Unicorn Magic</h3>
+<canvas id="maze" width="300" height="180"></canvas>
+<div class="controller">
+<div></div>
+<button class="btn" ontouchstart="keys.ArrowUp=true" ontouchend="keys.ArrowUp=false">⬆️</button>
+<div></div>
+<button class="btn" ontouchstart="keys.ArrowLeft=true" ontouchend="keys.ArrowLeft=false">⬅️</button>
+<button class="btn" ontouchstart="keys.ArrowDown=true" ontouchend="keys.ArrowDown=false">⬇️</button>
+<button class="btn" ontouchstart="keys.ArrowRight=true" ontouchend="keys.ArrowRight=false">➡️</button>
+</div>
 </div>
 
 <div class="card">
-    <h3 style="margin:5px; color:#666">🐶 Snoopy Adventure</h3>
-    <canvas id="snoopy" width="300" height="180"></canvas>
-    <div class="controller" style="grid-template-columns: 1fr 1fr 1fr;">
-        <button class="btn" ontouchstart="sDir=-5" ontouchend="sDir=0">⬅️</button>
-        <button class="btn" style="background:var(--pink); color:white" ontouchstart="jump()">JUMP</button>
-        <button class="btn" ontouchstart="sDir=5" ontouchend="sDir=0">➡️</button>
-    </div>
+<h3>🐶 Dog Adventure</h3>
+<canvas id="snoopy" width="300" height="180"></canvas>
+<div class="controller">
+<button class="btn" ontouchstart="sDir=-4" ontouchend="sDir=0">⬅️</button>
+<button class="btn" style="background:var(--pink);color:white" ontouchstart="jump()">JUMP</button>
+<button class="btn" ontouchstart="sDir=4" ontouchend="sDir=0">➡️</button>
+</div>
 </div>
 
-<div id="secret" class="secret-msg" onclick="this.style.display='none'"></div>
+<div id="winScreen" class="secret-msg">
+<h2 id="winText">🐾 ¡Nivel completado! 💖</h2>
+<button id="restartBtn">Reiniciar ✨</button>
+</div>
 
 <script>
-// --- CONFIGURACIÓN UNICORNIO ---
-const mCanvas = document.getElementById('maze');
-const mctx = mCanvas.getContext('2d');
-let ux = 20, uy = 20;
+const mCanvas=document.getElementById("maze");
+const mctx=mCanvas.getContext("2d");
+let ux=20,uy=30,floatT=0;
+const speed=2.2;
+const keys={};
 
-function drawMaze() {
-    mctx.clearRect(0, 0, 300, 180);
-    // Dibujar meta
-    mctx.font = "30px serif";
-    mctx.fillText("🌈", 250, 160);
-    // Dibujar Unicornio con sombra
-    mctx.shadowBlur = 10; mctx.shadowColor = "pink";
-    mctx.fillText("🦄", ux, uy);
-    mctx.shadowBlur = 0;
+const unicornGoal={x:260,y:155,r:18};
+
+const walls=[
+{x:60,y:0,w:15,h:120},
+{x:120,y:60,w:15,h:120},
+{x:180,y:0,w:15,h:120},
+{x:240,y:60,w:15,h:120}
+];
+
+function hitWall(nx,ny){
+ return walls.some(w=>nx+24>w.x && nx<w.x+w.w && ny+24>w.y && ny<w.y+w.h);
 }
 
-function moveU(dx, dy) {
-    // Límites para que no se salga
-    if (ux + dx >= 0 && ux + dx <= 270) ux += dx;
-    if (uy + dy >= 20 && uy + dy <= 170) uy += dy;
-    if (ux > 240 && uy > 140) showSecret('¡Llegaste a mi corazón! 💖');
-    drawMaze();
+window.addEventListener("keydown",e=>keys[e.key]=true);
+window.addEventListener("keyup",e=>keys[e.key]=false);
+
+function unicornLoop(){
+ let vx=(keys.ArrowRight-keys.ArrowLeft)*speed;
+ let vy=(keys.ArrowDown-keys.ArrowUp)*speed;
+
+ let nx=ux+vx, ny=uy+vy;
+ if(nx>=0 && nx<=270 && !hitWall(nx,uy)) ux=nx;
+ if(ny>=20 && ny<=170 && !hitWall(ux,ny)) uy=ny;
+
+ floatT+=0.05;
+ mctx.clearRect(0,0,300,180);
+
+ let g=mctx.createLinearGradient(0,0,300,180);
+ g.addColorStop(0,"#ffe6f0");
+ g.addColorStop(1,"#dbe4ff");
+ mctx.fillStyle=g;
+ mctx.fillRect(0,0,300,180);
+
+ mctx.font="26px serif";
+ mctx.fillText("💖",unicornGoal.x,unicornGoal.y);
+
+ walls.forEach(w=>{
+  mctx.shadowBlur=10;
+  mctx.shadowColor="#a29bfe";
+  mctx.fillStyle="#b8b3ff";
+  mctx.fillRect(w.x,w.y,w.w,w.h);
+  mctx.shadowBlur=0;
+ });
+
+ mctx.font="30px serif";
+ mctx.fillText("🦄",ux,uy+Math.sin(floatT)*3);
+
+ if(Math.hypot(ux-unicornGoal.x,uy-unicornGoal.y)<unicornGoal.r){
+  document.getElementById("winText").innerText="🦄 ¡Llegaste al corazón! 💖";
+  winScreen.style.display="block";
+ }
+
+ requestAnimationFrame(unicornLoop);
 }
 
-// --- CONFIGURACIÓN SNOOPY ---
-const sCanvas = document.getElementById('snoopy');
-const sctx = sCanvas.getContext('2d');
-let sx = 20, sy = 140, svy = 0, sDir = 0;
-const gravity = 0.6;
+const sCanvas=document.getElementById("snoopy");
+const sctx=sCanvas.getContext("2d");
 
-function updateSnoopy() {
-    sctx.clearRect(0, 0, 300, 180);
-    
-    // Suelo
-    sctx.fillStyle = "#95afc0";
-    sctx.fillRect(0, 150, 300, 30);
+let sx=20,sy=140,svy=0,sDir=0,finished=false;
+const gravity=0.6;
+const goal={x:1200};
 
-    // Movimiento horizontal con límites
-    sx += sDir;
-    if (sx < 0) sx = 0;
-    if (sx > 270) sx = 270;
+const obstacles=[
+{x:300,y:135,w:20,h:15},
+{x:500,y:125,w:25,h:25},
+{x:750,y:135,w:20,h:15},
+{x:950,y:125,w:25,h:25}
+];
 
-    // Salto y Gravedad
-    sy += svy;
-    svy += gravity;
-    if (sy > 140) { sy = 140; svy = 0; }
+function updateSnoopy(){
+ if(finished) return;
 
-    // Dibujar Snoopy
-    sctx.font = "35px serif";
-    sctx.fillText("🐶", sx, sy);
-    
-    if(sx > 250) showSecret('¡Contigo el mundo es mejor! 🐾');
-    requestAnimationFrame(updateSnoopy);
+ sctx.clearRect(0,0,300,180);
+
+ let sky=sctx.createLinearGradient(0,0,0,180);
+ sky.addColorStop(0,"#c7e9ff");
+ sky.addColorStop(1,"#fff");
+ sctx.fillStyle=sky;
+ sctx.fillRect(0,0,300,180);
+
+ sctx.fillStyle="#95afc0";
+ sctx.fillRect(0,150,300,30);
+
+ sx+=sDir;
+ if(sx<0) sx=0;
+
+ sy+=svy;
+ svy+=gravity;
+ if(sy>140){sy=140;svy=0;}
+
+ let cam=sx-60;
+
+ obstacles.forEach(o=>{
+  sctx.fillStyle="#ff85a2";
+  sctx.fillRect(o.x-cam,o.y,o.w,o.h);
+
+  if(sx+28>o.x && sx<o.x+o.w && sy+28>o.y){
+   sx=20;
+  }
+ });
+
+ sctx.font="30px serif";
+ sctx.fillText("🏁",goal.x-cam,140);
+
+ if(sx>goal.x){
+  finished=true;
+  document.getElementById("winText").innerText="🐶 ¡Nivel completado! 💖";
+  winScreen.style.display="block";
+ }
+
+ sctx.font="34px serif";
+ sctx.fillText("🐶",sx-cam,sy);
+
+ requestAnimationFrame(updateSnoopy);
 }
 
-function jump() { if (sy === 140) svy = -12; }
+function jump(){ if(sy===140) svy=-12; }
 
-function showSecret(t) {
-    const el = document.getElementById('secret');
-    el.style.display = 'block';
-    el.innerHTML = `<h3>${t}</h3><p style="font-size:12px">Toca para cerrar</p>`;
-}
-
-// Comandos Secretos de Teclado (Para PC)
-let buffer = "";
-window.addEventListener('keydown', e => {
-    buffer += e.key.toUpperCase();
-    if (buffer.includes("LOVE")) showSecret("¡CÓDIGO SECRETO: Eres lo más lindo!");
-    if (buffer.length > 10) buffer = "";
+window.addEventListener("keydown",e=>{
+ if(e.key==="a") sDir=-4;
+ if(e.key==="d") sDir=4;
+ if(e.key===" ") jump();
 });
+window.addEventListener("keyup",()=>sDir=0);
 
-// Iniciar juegos
-drawMaze();
+restartBtn.onclick=()=>{
+ finished=false;
+ sx=20; sy=140;
+ ux=20; uy=30;
+ winScreen.style.display="none";
+ updateSnoopy();
+};
+
+unicornLoop();
 updateSnoopy();
 </script>
+
 </body>
 </html>
